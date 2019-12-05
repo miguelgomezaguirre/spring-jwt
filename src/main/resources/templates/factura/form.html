@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.themeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container">
+		<a class="btn btn-light btn-xs" th:href="@{/ver/} + ${factura.cliente.id}" th:text="'Volver al cliente'"></a>
+		
+		<h1 th:text="${titulo}"></h1>
+		<form th:action="@{/factura/form}" th:object="${factura}"
+			method="post">
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" th:text="'Cliente: '"></label>
+				<div class="container">
+					<input
+						th:value="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"
+						disabled="disabled" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" th:text="'Descripcion: '"></label>
+				<div class="container">
+					<input type="text" th:field="*{descripcion}" class="form-control" />
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" th:text="'Buscar Producto '"></label>
+				<div class="container">
+					<input type="text" name="buscar_producto" id="buscar_producto" class="form-control" />
+				</div>
+			</div>
+			
+			<table th:replace="factura/plantilla-items :: itemsFactura"></table>
+			
+			<table id="cargarItemProductos" class="table table-sm table-striped table-hover">
+				<thead>
+					<tr>
+						<th>NOMBRE</th>
+						<th>PRECIO</th>
+						<th>CANTIDAD</th>
+						<th>TOTAL</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+
+			<div class="form-group row">
+				<input type="submit" th:value="${titulo}" class="btn btn-secondary" />
+			</div>
+		</form>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+	<script th:replace="factura/js/autocomplete-productos :: javascript"></script>
+<!-- 	<script th:repalce="factura/js/autocomplete-productos :: javascript"></script> -->
+</body>
+</html>
