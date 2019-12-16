@@ -114,7 +114,7 @@ public class ClienteController {
 
 	@RequestMapping(value = "/ver/{id}")
 	public String ver(@PathVariable(value = "id") Long id, Model model) {
-		Cliente cliente = clienteService.findOne(id);
+		Cliente cliente = clienteService.fetchByIdWithFacturas(id);
 		if (cliente == null) {
 			return "redirect:listar";
 		}
