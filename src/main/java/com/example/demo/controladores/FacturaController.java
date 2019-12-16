@@ -88,4 +88,15 @@ public class FacturaController {
 
 		return "factura/ver";
 	}
+
+	@GetMapping("/eliminar/{id}")
+	public String eliminar(@PathVariable(value = "id") Long id) {
+		Factura factura = clienteService.findFacturaById(id);
+
+		if (factura != null) {
+			clienteService.deleteFactura(id);
+			return "redirect:/ver/" + factura.getCliente().getId();
+		}
+		return "redirect:/listar";
+	}
 }
