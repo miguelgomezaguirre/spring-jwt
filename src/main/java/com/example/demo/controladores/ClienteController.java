@@ -31,7 +31,7 @@ public class ClienteController {
 	private IClienteService clienteService;
 	private final static String UPLOAD_FOLDER = "uploads";
 
-	@RequestMapping(value = "/listar")
+	@RequestMapping(value = {"/listar", "/"})
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Listado de Clientes");
 		model.addAttribute("clientes", clienteService.findAll());
