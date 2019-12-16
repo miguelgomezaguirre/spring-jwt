@@ -12,6 +12,7 @@
 				<td><input type="number" value="1" name="cantidad[]" id="cantidad_{ID}" class="form-control"
 							onchange="itemsHelper.calcularImporte({ID},{PRECIO}, this.value);"/></td>
 				<td><span id="total_importe_{ID}">0</span></td>
+				<td><a href="#" onclick="itemsHelper.eliminarLineaFactura({ID});" class="btn btn-danget btn-xs">eliminar</a></td>
 			</tr>
 		</tbody>
 	
