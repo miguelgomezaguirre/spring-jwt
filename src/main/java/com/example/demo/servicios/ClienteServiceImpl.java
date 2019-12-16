@@ -2,6 +2,8 @@ package com.example.demo.servicios;
 
 import java.util.List;
 
+import com.example.demo.modelos.dao.IFacturaDao;
+import com.example.demo.modelos.entidad.Factura;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ public class ClienteServiceImpl implements IClienteService {
 	private IClienteDao clienteDao;
 	@Autowired
 	private IProductoDao productoDao;
+	@Autowired
+	private IFacturaDao facturaDao;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -46,6 +50,24 @@ public class ClienteServiceImpl implements IClienteService {
 	@Override
 	public List<Producto> findByNombre(String term) {
 		return productoDao.findByNombre(term);
+	}
+
+	@Override
+	@Transactional
+	public void saveFactura(Factura factura) {
+		facturaDao.save(factura);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Producto findProductoById(Long id) {
+		return productoDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Factura findFacturaById(Long id) {
+		return facturaDao.findById(id).orElse(null);
 	}
 
 }
