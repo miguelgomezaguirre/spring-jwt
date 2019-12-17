@@ -5,11 +5,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +44,7 @@ public class ClienteController {
 		return "listar";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String crear(Model model) {
 		Cliente cliente = new Cliente();
@@ -46,6 +53,7 @@ public class ClienteController {
 		return "form";
 	}
 
+    @Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
 	public String editar(@PathVariable(value = "id") Long id, Model model) {
 
@@ -62,6 +70,7 @@ public class ClienteController {
 		return "form";
 	}
 
+    @Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Cliente cliente, BindingResult result, Model model,
 			@RequestParam("file") MultipartFile foto) {
@@ -96,6 +105,7 @@ public class ClienteController {
 		return "redirect:listar";
 	}
 
+    @Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id) {
 		if (id > 0) {
@@ -112,6 +122,7 @@ public class ClienteController {
 		return "redirect:/listar";
 	}
 
+    @Secured("ROLE_USER")
 	@RequestMapping(value = "/ver/{id}")
 	public String ver(@PathVariable(value = "id") Long id, Model model) {
 		Cliente cliente = clienteService.fetchByIdWithFacturas(id);
@@ -122,4 +133,30 @@ public class ClienteController {
 		model.addAttribute("titulo", "Datos del cliente: " + cliente.getNombre() + " " + cliente.getApellido());
 		return "ver";
 	}
+
+	private boolean hasRole(String role) {
+
+        SecurityContext context = SecurityContextHolder.getContext();
+
+        if (context == null) {
+            return false;
+        }
+
+        Authentication authentication = context.getAuthentication();
+
+        if (authentication == null) {
+            return false;
+        }
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        for (GrantedAuthority authority: authorities) {
+
+            if (role.equals(authority.getAuthority())) {
+                return true;
+            }
+        }
+
+	    return false;
+    }
 }

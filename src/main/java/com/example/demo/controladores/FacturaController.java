@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.demo.modelos.entidad.ItemFactura;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 
+@Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping("/factura")
 @SessionAttributes("factura")
@@ -24,7 +26,7 @@ public class FacturaController {
 	
 	@Autowired
 	private IClienteService clienteService;
-	
+
 	@RequestMapping(value="/form/{clienteId}")
 	private String crear(@PathVariable(value="clienteId") Long clienteId, Model model) {
 		Cliente cliente = clienteService.findOne(clienteId);
@@ -40,7 +42,7 @@ public class FacturaController {
 		
 		return "factura/form";
 	}
-	
+
 	@GetMapping(value="/cargar-productos/{term}", produces = {"application/json"})
 	public @ResponseBody List<Producto> cargarProductos(@PathVariable String term) {
 		return clienteService.findByNombre(term);

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.themeleaf.org">
+<html xmlns:th="http://www.themeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
 
 	<header th:replace="layout/layout :: header"></header>
 	
 	<div class="container">
-		<a class="btn btn-light btn-xs" th:href="@{/factura/form/} + ${cliente.id}" th:text="'crear factura'"></a>
+		<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-light btn-xs" th:href="@{/factura/form/} + ${cliente.id}" th:text="'crear factura'"></a>
 	
 		<img th:if="${#strings.length(cliente.foto) > 0 }"
 			class="img-thumbnail rounded float-left" style="max-width: 25%;"
@@ -29,8 +29,8 @@
 					<th>Descripcion</th>
 					<th>Fecha</th>
 					<th>Total</th>
-					<th>Ver</th>
-					<th>Eliminar</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Ver</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -39,9 +39,13 @@
 					<td th:text="${factura.descripcion}"></td>
 					<td th:text="${factura.createAt}"></td>
 					<td th:text="${factura.getTotal()}"></td>
-					<td><a class="btn btn-primary btn-xs" th:href="@{'/factura/ver/' + ${factura.id}}" th:text="'Detalle'"/></td>
-					<td><a class="btn btn-danger btn-xs" th:href="@{'/factura/eliminar/' + ${factura.id}}"
-						   th:text="'Eliminar'" onclick="return confirm('Esta seguro que desea eliminar la factura?');"/></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="btn btn-primary btn-xs" th:href="@{'/factura/ver/' + ${factura.id}}" th:text="'Detalle'"/>
+					</td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="btn btn-danger btn-xs" th:href="@{'/factura/eliminar/' + ${factura.id}}"
+						   th:text="'Eliminar'" onclick="return confirm('Esta seguro que desea eliminar la factura?');"/>
+					</td>
 				</tr>
 			</tbody>
 		</table>
