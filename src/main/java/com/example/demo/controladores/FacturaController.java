@@ -18,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 
+//TODO: resolver el null pointer al crear la factura
 @Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping("/factura")
