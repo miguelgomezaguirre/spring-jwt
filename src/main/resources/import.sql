@@ -20,4 +20,11 @@ insert into facturas_items(cantidad, factura_id, producto_id) values(1, 2, 5);
 insert into facturas_items(cantidad, factura_id, producto_id) values(2, 2, 6);
 insert into facturas_items(cantidad, factura_id, producto_id) values(1, 2, 7);
 
+insert into users(username, password, enabled) values('miguel', '$2a$10$fYaL2olayE8Dl8bHycWIXObIkjkDwHv63uNTbczSV/7YXQWxbjJwm', 1);
+insert into users(username, password, enabled) values('admin',  '$2a$10$zWvTV4TiPDabXyXv1QIhzOahSvGsCnDTssQoTtigxFp0w.1.7N0T.', 1);
+
+insert into authorities(user_id, authority) values(1, 'ROLE_USER');
+insert into authorities(user_id, authority) values(2, 'ROLE_USER');
+insert into authorities(user_id, authority) values(2, 'ROLE_ADMIN');
+
 
