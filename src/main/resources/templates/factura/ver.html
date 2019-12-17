@@ -8,6 +8,7 @@
     <div class="container">
         <h4>
             <a th:href="@{'/ver/' + ${factura.cliente.id}}" class="btn btn-light btn-xs"> volver </a>
+            <a th:href="@{'/factura/ver/' + ${factura.id}(format=xlsx)}" class="btn btn-success btn-xs float-right mx-2">XLSX</a>
             <a th:href="@{'/factura/ver/' + ${factura.id}(format=pdf)}" class="btn btn-danger btn-xs float-right">PDF</a>
         </h4>
 
