@@ -6,10 +6,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
+import com.example.demo.view.xml.ClienteList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -19,11 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.modelos.entidad.Cliente;
@@ -36,6 +34,11 @@ public class ClienteController {
 	@Autowired
 	private IClienteService clienteService;
 	private final static String UPLOAD_FOLDER = "uploads";
+
+	@GetMapping(value = "/listar-rest")
+	public @ResponseBody ClienteList listarRest() {
+		return new ClienteList(clienteService.findAll());
+	}
 
 	@RequestMapping(value = {"/listar", "/"})
 	public String listar(Model model) {
