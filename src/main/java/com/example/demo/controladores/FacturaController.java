@@ -19,7 +19,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.validation.Valid;
 
 //TODO: resolver el null pointer al crear la factura
-@Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping("/factura")
 @SessionAttributes("factura")
@@ -28,6 +27,7 @@ public class FacturaController {
 	@Autowired
 	private IClienteService clienteService;
 
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/form/{clienteId}")
 	private String crear(@PathVariable(value="clienteId") Long clienteId, Model model) {
 		Cliente cliente = clienteService.findOne(clienteId);
@@ -44,11 +44,13 @@ public class FacturaController {
 		return "factura/form";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@GetMapping(value="/cargar-productos/{term}", produces = {"application/json"})
 	public @ResponseBody List<Producto> cargarProductos(@PathVariable String term) {
 		return clienteService.findByNombre(term);
 	}
 
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/form")
 	public String guardar(@Valid Factura factura,
 						  BindingResult result,
@@ -77,6 +79,7 @@ public class FacturaController {
 		return "redirect:/ver/" + factura.getCliente().getId();
 	}
 
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/ver/{id}")
 	public String ver(@PathVariable(value = "id") Long id, Model model) {
 
@@ -92,6 +95,7 @@ public class FacturaController {
 		return "factura/ver";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id) {
 		Factura factura = clienteService.findFacturaById(id);
