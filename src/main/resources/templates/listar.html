@@ -10,6 +10,7 @@
 		<h1 class="text-secondary" th:text="${titulo}"></h1>
 		<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-light btn-xs" th:href="@{/form}"
 			th:text="'Crear cliente'"></a>
+		<a th:href="@{'/listar'(format=csv)}" class="btn btn-success btn-xs float-right mx-2">CSV</a>
 		<table class="table table-striped">
 			<thead>
 				<tr>
