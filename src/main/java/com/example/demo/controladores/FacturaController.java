@@ -29,7 +29,7 @@ public class FacturaController {
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/form/{clienteId}")
-	private String crear(@PathVariable(value="clienteId") Long clienteId, Model model) {
+	public String crear(@PathVariable(value="clienteId") Long clienteId, Model model) {
 		Cliente cliente = clienteService.findOne(clienteId);
 		
 		if (cliente==null) {
