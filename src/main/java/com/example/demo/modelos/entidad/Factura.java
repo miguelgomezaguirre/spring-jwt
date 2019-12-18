@@ -1,5 +1,7 @@
 package com.example.demo.modelos.entidad;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +39,7 @@ public class Factura implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Cliente cliente;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "factura_id")

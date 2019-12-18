@@ -1,5 +1,8 @@
 package com.example.demo.modelos.entidad;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,9 +41,11 @@ public class Cliente implements Serializable {
 	private String email;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date createAt;
 	private String foto;
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Factura> facturas;
 
 	public Cliente() {
